@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="test"><h1>{{ message }}</h1></div>
+      <br/>
+      <button v-on:click="InjectCss">Ajouter le style</button>
+      <button v-on:click="DeleteCss">Enlever le style</button>
+    </div>
+    <script>
+      
+      new Vue({
+        el: "#app",
+        data: {
+          message: "Hello World !",
+          css: "h1{font-size: 5rem;color:red;}body{background:blue;}div.test{border:solid 2px white; background:green;border-radius:50px}", //Pour simuler la BDD
+          style: null,
+        },
+        methods: {
+            InjectCss: function (event) {
+              this.style = document.createElement("style"); //Je créer la balise <style>
+              var newContent = document.createTextNode(this.css); //Je créer un node contenant le css
+              this.style.appendChild(newContent); //Je rattache le node à la balise <style>
+              document.head.append(this.style); //Je rattache la balise style au <head> de la page
+            },
+            DeleteCss: function (event) {
+              if(this.style != null)
+                  document.head.removeChild(this.style); //Je supprime du <head> la balise <style> précédement créé 
+            }
+          }
+      })
+    </script>
+  </body>
+</html>
